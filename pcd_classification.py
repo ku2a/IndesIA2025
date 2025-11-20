@@ -205,7 +205,7 @@ def detect_trunks(path):
     return combined_cloud
 
 
-visuals = detect_trunks("resultados_kpconv/kpconv_000851.pcd")
+visuals = detect_trunks("resultados_kpconv/kpconv_000373.pcd")
 o3d.io.write_point_cloud("class/resultado_kpconv_visuals.pcd", visuals)
 visuals = detect_trunks("resultados_kpconv/kpconv_000261.pcd")
 o3d.io.write_point_cloud("class/261_visuals.pcd", visuals)
