@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt  # <--- Necesario para los mapas de color (Heatm
 # -----------------------------
 # CONFIGURACIÓN
 # -----------------------------
-path = "full_ciudad/cloud_full_000378.xyz"
+path = "full_ciudad/cloud_full_000788.xyz"
 output_filename = "resultado_heatmap_reflectividad.pcd"
 MAPA_DE_COLOR = "jet"  # Opciones: 'jet', 'viridis', 'plasma', 'inferno', 'magma'
 
@@ -20,7 +20,7 @@ try:
     df = pd.read_csv(path, sep=' ', header=None, names=['x', 'y', 'z', 'ref', 'nir'])
     
     points = df[['x', 'y', 'z']].values.astype(np.float32)
-    reflectivity = df['nir'].values.astype(np.float32)
+    reflectivity = df['ref'].values.astype(np.float32)
     
     print(f"Datos cargados: {len(points)} puntos.")
 
@@ -35,8 +35,8 @@ except Exception as e:
 # La reflectividad cruda puede tener picos muy altos que "apagan" el resto de colores.
 # Usamos percentiles para ignorar outliers extremos.
 
-min_val = np.percentile(reflectivity, 1)   # El valor mínimo (ignorando el 1% más bajo)
-max_val = np.percentile(reflectivity, 99)  # El valor máximo (ignorando el 1% más alto)
+min_val = reflectivity.min()   # El valor mínimo (ignorando el 1% más bajo)
+max_val = reflectivity.max()  # El valor máximo (ignorando el 1% más alto)
 
 print(f"Rango de reflectividad usado: {min_val} a {max_val}")
 
