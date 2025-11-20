@@ -25,7 +25,7 @@ else:
                 f.write(chunk)
 
 
-path = "full_ciudad/cloud_full_000047.xyz"
+path = "full_ciudad/cloud_full_000585.xyz"
 
 nombre_archivo = os.path.basename(path)  
 try:
