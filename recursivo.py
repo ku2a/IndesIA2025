@@ -6,7 +6,7 @@ from open3d.ml.torch.pipelines import SemanticSegmentation # <--- IMPORTANTE
 import glob, os
 
 
-archivos = glob.glob("full/*.xyz")
+archivos = glob.glob("full_ciudad/*.xyz")
 os.makedirs("resultados_procesados", exist_ok=True)
 # -----------------------------
 # 1. Configurar y Cargar modelo

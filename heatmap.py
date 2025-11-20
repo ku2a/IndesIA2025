@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt  # <--- Necesario para los mapas de color (Heatm
 # -----------------------------
 # CONFIGURACIÓN
 # -----------------------------
-path = "full_ciudad/cloud_full_000788.xyz"
+path = "full_ciudad/cloud_full_000098.xyz"
 output_filename = "resultado_heatmap_reflectividad.pcd"
 MAPA_DE_COLOR = "jet"  # Opciones: 'jet', 'viridis', 'plasma', 'inferno', 'magma'
 

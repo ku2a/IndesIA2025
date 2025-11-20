@@ -101,7 +101,7 @@ while 0 <= i < len(range_files):
         # 4. Juntar todo horizontalmente (Horizontal Stack)
         # El resultado será una matriz de (N_validos, 5) -> [X, Y, Z, Refl, NIR]
         data_to_save = np.hstack((xyz_valid, refl_valid, nir_valid))
-
+        filename = f"full_ciudad/{filename}"
         # 5. Guardar
         # fmt="%.4f" guardará todo con 4 decimales. 
         # Es suficiente para XYZ y funciona bien para Refl/NIR aunque sean enteros.

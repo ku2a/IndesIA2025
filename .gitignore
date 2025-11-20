@@ -1,0 +1,7 @@
+1756674415
+logs
+kernels
+resultados_procesados/
+*.pcd
+full_ciudad/
+kpconv_semantickitti_202009090354utc.pth
