@@ -6,10 +6,11 @@ import torch
 from open3d.ml.torch.pipelines import SemanticSegmentation
 import os, requests
 
+path = "full_ciudad/cloud_full_001014.xyz"
+
 
 filename="kpconv_semantickitti_202009090354utc.pth"
 url = "https://storage.googleapis.com/open3d-releases/model-zoo/kpconv_semantickitti_202009090354utc.pth"
-
 
 
 if os.path.exists(filename):
@@ -24,7 +25,7 @@ else:
                 f.write(chunk)
 
 
-path = "full_ciudad/cloud_full_001014.xyz"
+
 nombre_archivo = os.path.basename(path)  
 try:
 

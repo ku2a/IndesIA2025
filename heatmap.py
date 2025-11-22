@@ -14,7 +14,7 @@ try:
 except:
     frame_id = "unknown"
 
-output_filename = f"heatmap_{frame_id}.pcd"
+output_filename = f"heatmaps/heatmap_{frame_id}.pcd"
 MAPA_DE_COLOR = "jet" 
 
 

@@ -2,7 +2,11 @@ import open3d as o3d
 import numpy as np
 import matplotlib.pyplot as plt
 import copy
+import os
 
+path1="resultados_kpconv/kpconv_000373.pcd"
+path2="resultados_kpconv/kpconv_000261.pcd"
+path3="resultados_kpconv/kpconv_000230.pcd"
 colors_map = np.array([
     [0, 0, 0],          # 0: ignored/unlabeled
     [245,150,100],      # 1: car
@@ -116,6 +120,36 @@ def detect_sidewalk(path):
     max_label = labels.max()
     print(f"Found {max_label + 1} distinct sidewalk segments.")
 
+    if max_label < 1:
+        print("[ERROR] Less than two sidewalk segments found. Cannot measure width.")
+        return
+    
+    # Measure sidewalk
+    indices_A = np.where(labels == 0)[0]
+    cloud_A = clean_cloud.select_by_index(indices_A)
+    
+    indices_B = np.where(labels == 1)[0]
+    cloud_B = clean_cloud.select_by_index(indices_B)
+
+    distance_A_to_B = cloud_A.compute_point_cloud_distance(cloud_B)
+    distance_B_to_A = cloud_B.compute_point_cloud_distance(cloud_A)
+
+    closest_dist_A_to_B = np.asarray(distance_A_to_B)
+    idx_in_A = np.argmin(closest_dist_A_to_B)
+    closest_dist_B_to_A = np.asarray(distance_B_to_A)
+    idx_in_B = np.argmin(closest_dist_B_to_A)
+
+    points_A = np.asarray(cloud_A.points)
+    points_B = np.asarray(cloud_B.points)
+    
+    inner_edge_A = points_A[idx_in_A]
+    inner_edge_B = points_B[idx_in_B]
+    
+    # Calculate the Euclidean distance between the two points
+    road_width_3D = np.linalg.norm(inner_edge_A - inner_edge_B)
+
+    print(f"Curb-to-Curb Road Width: {road_width_3D:.2f} m")
+
     cluster = 1
     side_indices = np.where(labels == cluster)[0]
     single_side_cloud = clean_cloud.select_by_index(side_indices)
@@ -138,6 +172,16 @@ detect_sidewalk("resultados_randlanet/randlanet_000047.pcd")
 
 ## Troncos
 def detect_trunks(path):
+
+
+    nombre_archivo = os.path.basename(path)  
+    try:
+
+        frame_id = nombre_archivo.split('_')[-1].replace('.xyz', '')
+    except:
+        frame_id = "unknown"
+
+    output_name = f"class/trunks_{frame_id}"
     pcd = view_semantic_pcd(path)
     
     TARGET_RGB = [0,175,0]
@@ -202,15 +246,15 @@ def detect_trunks(path):
             visuals.append(aabb)
 
     o3d.visualization.draw_geometries(visuals)
-    return combined_cloud
+    return output_name,combined_cloud
 
 
-visuals = detect_trunks("resultados_kpconv/kpconv_000373.pcd")
-o3d.io.write_point_cloud("class/resultado_kpconv_visuals.pcd", visuals)
-visuals = detect_trunks("resultados_kpconv/kpconv_000261.pcd")
-o3d.io.write_point_cloud("class/261_visuals.pcd", visuals)
-visuals = detect_trunks("resultados_kpconv/kpconv_000230.pcd")
-o3d.io.write_point_cloud("class/230_visuals.pcd", visuals)
+visuals = detect_trunks(path1)
+o3d.io.write_point_cloud(visuals[0],visuals[1])
+visuals = detect_trunks(path2)
+o3d.io.write_point_cloud(visuals[0],visuals[1])
+visuals = detect_trunks(path3)
+o3d.io.write_point_cloud(visuals[0],visuals[1])
 
 
 ## Trees with randlanet model
