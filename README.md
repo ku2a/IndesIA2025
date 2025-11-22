@@ -29,7 +29,7 @@ Por la limitada cantidad de espacio que podemos subir y el peso del .pcd hemos d
 
 Los modelos preentrenados no se incluyen en el repositorio pero se instalarán automáticamente al ejecutar RLAN.py o kpc.py.
 Para cambiar el archivo que se procesa en cada archivo basta con cambiar la variable path al principio de cada archivo.
-
+Al ejecutar los archivos se generará la propia visualización con open3d y tendrá como resultado también en su respectiva carpeta un .pcd que se puede visualizar utilizando software como CloudCompare
 
 
 
